@@ -68,12 +68,14 @@ class ViewController: NSViewController {
     }
     
     func render() {
+        guard let context = self.context else { return }
+        
         DispatchQueue(label: "Render").async {
             for pixel in self.pixels {
                 self.draw(pixel: pixel)
             }
             
-            guard let image = self.context?.makeImage() else { return }
+            let image = context.makeImage()
             
             DispatchQueue.main.async {
                 self.view.layer?.contents = image
